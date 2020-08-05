@@ -1,13 +1,33 @@
-from evaluate import KEYWORDS
-
 TOKEN_NUMBER = 0
 TOKEN_IDEN = 1
 TOKEN_COLON = 2
-TOKEN_KEYWORD = 3
-TOKEN_COLON = 4
-TOKEN_SEMICOLON = 5
-TOKEN_ERROR = 6
-TOKEN_END = 7
+TOKEN_KEYWORD_DUP = 3
+TOKEN_KEYWORD_SWAP = 4
+TOKEN_KEYWORD_ROT = 5
+TOKEN_KEYWORD_DROP = 6
+TOKEN_KEYWORD_AVG = 7
+TOKEN_KEYWORD_PRINT = 8
+TOKEN_KEYWORD_ADD = 9
+TOKEN_KEYWORD_SUB = 10
+TOKEN_KEYWORD_MULTIPLY = 11
+TOKEN_KEYWORD_DIVIDE = 12
+TOKEN_COLON = 13
+TOKEN_SEMICOLON = 14
+TOKEN_ERROR = 15
+TOKEN_END = 16
+
+KEYWORD_MAP = {
+    "dup": TOKEN_KEYWORD_DUP,
+    "swap": TOKEN_KEYWORD_SWAP,
+    "rot": TOKEN_KEYWORD_ROT,
+    "drop": TOKEN_KEYWORD_DUP,
+    "avg": TOKEN_KEYWORD_AVG,
+    "print": TOKEN_KEYWORD_PRINT,
+    "+": TOKEN_KEYWORD_ADD,
+    "-": TOKEN_KEYWORD_SUB,
+    "*": TOKEN_KEYWORD_MULTIPLY,
+    "/": TOKEN_KEYWORD_DIVIDE,
+}
 
 class Token:
     def __init__(self, token, lexeme):
@@ -25,7 +45,7 @@ class Lexer:
 
         c = self._curr()
 
-        skipped = False
+        # Skip whitespace
         while c == ' ':
             self.current += 1
             c = self._curr()
@@ -44,8 +64,8 @@ class Lexer:
             return self._tokenNumber()
         elif c.isalpha() or c in "+-/*":
             word = self._lexword()
-            if word in KEYWORDS:
-                return Token(TOKEN_KEYWORD, word)
+            if word in KEYWORD_MAP:
+                return Token(KEYWORD_MAP[word], word)
             else:
                 return Token(TOKEN_IDEN, word)
         elif c == ":":

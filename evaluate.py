@@ -58,19 +58,3 @@ def divide(stack):
     a = stack.pop()
     b = stack.pop()
     stack.append(a / b)
-
-'''
-    Map keywords to the evaluating functions
-'''
-KEYWORDS = {
-    "dup": dup,
-    "swap": swap,
-    "rot": rot,
-    "drop": drop,
-    "avg": avg,
-    "print": printtop,
-    "+": add,
-    "-": subtract,
-    "*": multiply,
-    "/": divide
-}
