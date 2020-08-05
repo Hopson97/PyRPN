@@ -17,6 +17,20 @@ OPCODE_SUBTRACT = 9
 OPCODE_MULTIPLY = 10
 OPCODE_DIVIDE = 11
 
+TOKEN_TO_BUILTIN = {
+    lex.TOKEN_KEYWORD_DUP: OPCODE_DUP,
+    lex.TOKEN_KEYWORD_SWAP: OPCODE_SWAP,
+    lex.TOKEN_KEYWORD_ROT: OPCODE_ROT,
+    lex.TOKEN_KEYWORD_DUP: OPCODE_DUP,
+    lex.TOKEN_KEYWORD_DROP: OPCODE_DROP,
+    lex.TOKEN_KEYWORD_AVG: OPCODE_AVG,
+    lex.TOKEN_KEYWORD_PRINT: OPCODE_PRINT,
+    lex.TOKEN_KEYWORD_ADD: OPCODE_ADD,
+    lex.TOKEN_KEYWORD_SUB: OPCODE_SUBTRACT,
+    lex.TOKEN_KEYWORD_MULTIPLY: OPCODE_MULTIPLY,
+    lex.TOKEN_KEYWORD_DIVIDE: OPCODE_DIVIDE,
+}
+
 '''
     Map keywords to the evaluating functions
 '''
@@ -70,7 +84,6 @@ class Machine:
                 token = lexer.nextToken()
             self.functions[len(self.functions)] = body
             self.symbolTable[name] = len(self.functions) - 1
-            print("Added", name)
 
         elif token.type == lex.TOKEN_IDEN:
             if not token.lexeme in self.symbolTable:
@@ -80,26 +93,8 @@ class Machine:
             code.append(self.symbolTable[token.lexeme])
 
         # smh direct mappings for keywords and tokens dont judge me
-        elif token.type == lex.TOKEN_KEYWORD_DUP:
-            code.append(OPCODE_DUP)
-        elif token.type == lex.TOKEN_KEYWORD_SWAP:
-            code.append(OPCODE_SWAP)
-        elif token.type == lex.TOKEN_KEYWORD_ROT:
-            code.append(OPCODE_ROT)
-        elif token.type == lex.TOKEN_KEYWORD_DROP:
-            code.append(OPCODE_DROP)
-        elif token.type == lex.TOKEN_KEYWORD_AVG:
-            code.append(OPCODE_AVG)
-        elif token.type == lex.TOKEN_KEYWORD_PRINT:
-            code.append(OPCODE_PRINT)
-        elif token.type == lex.TOKEN_KEYWORD_ADD:
-            code.append(OPCODE_ADD)
-        elif token.type == lex.TOKEN_KEYWORD_SUB:
-            code.append(OPCODE_SUBTRACT)
-        elif token.type == lex.TOKEN_KEYWORD_MULTIPLY:
-            code.append(OPCODE_MULTIPLY)
-        elif token.type == lex.TOKEN_KEYWORD_DIVIDE:
-            code.append(OPCODE_DIVIDE)
+        elif token.type in TOKEN_TO_BUILTIN:
+            code.append(TOKEN_TO_BUILTIN[token.type])
         else:
             print("Unexpected token: " + token.type)
             return False

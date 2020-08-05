@@ -20,7 +20,7 @@ KEYWORD_MAP = {
     "dup": TOKEN_KEYWORD_DUP,
     "swap": TOKEN_KEYWORD_SWAP,
     "rot": TOKEN_KEYWORD_ROT,
-    "drop": TOKEN_KEYWORD_DUP,
+    "drop": TOKEN_KEYWORD_DROP,
     "avg": TOKEN_KEYWORD_AVG,
     "print": TOKEN_KEYWORD_PRINT,
     "+": TOKEN_KEYWORD_ADD,
