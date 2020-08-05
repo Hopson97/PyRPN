@@ -41,7 +41,13 @@ class Machine:
     The main programme
 '''
 if __name__ == "__main__":
-    source = "3 3 :ADDTHREE 3 + ; :ADDFIVE ADDTHREE 2 + ; 2 ADDFIVE print "
+    source = "\
+        3 3 \
+        :ADDTHREE 3 + ; \
+        :ADDFIVE ADDTHREE 2 + ;\
+        2 ADDFIVE print 5 6 7 dup drop + -\
+        :ADDFIFTY ADDTHREE ADDFIVE 42 + ;\
+        ADDFIFTY print avg print"
     #expression = ": ADDTHREE 3 + ; 3 ADDTHREE print"
     #expression = "3 3 + print"
     machine = Machine()

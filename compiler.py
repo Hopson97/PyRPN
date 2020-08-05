@@ -8,13 +8,17 @@ class Parser:
     def parse(self, functions, lexer, token, code):
         if token.type == lex.TOKEN_NUMBER:
             code.append(op.OPCODE_PUSH)
-            code.append(float(token.lexeme))    
+            code.append(float(token.lexeme)) 
+
         elif token.type == lex.TOKEN_COLON:
             token = lexer.nextToken()
             if token.type != lex.TOKEN_IDEN:
                 print("Error: Expected TOKEN_IDEN but got " + token.lexeme)
                 return False
             name = token.lexeme
+            if name in self.symbolTable:
+                print("Error: Function with name " + name + " already exists.")
+                return False
             body = []
             token = lexer.nextToken()
             while token.type != lex.TOKEN_SEMICOLON:
@@ -25,7 +29,8 @@ class Parser:
                     return False
                 token = lexer.nextToken()
             functions[len(functions)] = body
-            self.symbolTable[name] = len(functions) - 1    
+            self.symbolTable[name] = len(functions) - 1
+
         elif token.type == lex.TOKEN_IDEN:
             if not token.lexeme in self.symbolTable:
                 print("Error: Unrecognised identifer: " + token.lexeme)
@@ -33,7 +38,8 @@ class Parser:
             code.append(op.OPCODE_CALL)
             code.append(self.symbolTable[token.lexeme]) 
         elif token.type in op.TOKEN_TO_BUILTIN:
-            code.append(op.TOKEN_TO_BUILTIN[token.type])    
+            code.append(op.TOKEN_TO_BUILTIN[token.type])  
+
         else:
             print("Unexpected token: " + token.type)
             return False
