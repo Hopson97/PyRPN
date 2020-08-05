@@ -1,4 +1,4 @@
-expression = "15.5 1.5 + 2 swap p"
+expression = "15.5 1.5 + 2 swap + print "
 stack = []
 ptr = 0
 
@@ -14,10 +14,10 @@ def hasNext():
 
 def parseDigit():
     n = ""
-    while hasNext() and current().isdigit():
+    while current().isdigit():
         n += current()
         advance()
-    if hasNext() and current() == ".":
+    if current() == ".":
         n += "."
         advance() 
         while current().isdigit():
@@ -27,7 +27,7 @@ def parseDigit():
 
 def parseWord():
     word = ""
-    while hasNext() and current().isalpha():
+    while current().isalpha():
         word += current()
         advance()
     return word
@@ -73,7 +73,6 @@ if __name__ == "__main__":
             else:
                 print("Unknown word '" + word + "'. Exiting.")
                 exit()
-            advance()
         elif c in "+-/*":
             a = stack.pop()
             b = stack.pop()
