@@ -65,29 +65,29 @@ def compileFunction():
 
 def evaluate():
     while not callstackTop().atEnd():
-            c = callstackTop().current()
-            if c.isdigit():
-                stack.append(parseDigit())
-            elif c.isalpha() or c in "+-/*":
-                word = parseWord()
-                if word in KEYWORDS:
-                    KEYWORDS[word](stack)
-                elif word in functions:
-                    callstack.append(StackFrame(functions[word]))
-                    evaluate()
-                    callstack.pop()
-                else:
-                    print("Unknown word '" + word + "'. Exiting.")
-                    exit()
-            elif c == ':':
-                compileFunction()
-            callstackTop().advance()
+        c = callstackTop().current()
+        if c.isdigit():
+            stack.append(parseDigit())
+        elif c.isalpha() or c in "+-/*":
+            word = parseWord()
+            if word in KEYWORDS:
+                KEYWORDS[word](stack)
+            elif word in functions:
+                callstack.append(StackFrame(functions[word]))
+                evaluate()
+                callstack.pop()
+            else:
+                print("Unknown word '" + word + "'. Exiting.")
+                exit()
+        elif c == ':':
+            compileFunction()
+        callstackTop().advance()
 
 '''
     The main programme
 '''
 #
 if __name__ == "__main__":
-    expression = "15.5 1.5 + 2 swap + 2 5 * - dup print :ADDTHREE 3 +; ADDTHREE print "
+    expression = ":ADDTHREE 3 +; :ADDFIVE ADDTHREE 2 +; 2 ADDFIVE print "
     callstack.append(StackFrame(expression))
     evaluate()
