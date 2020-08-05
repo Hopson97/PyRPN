@@ -26,8 +26,11 @@ def parseDigit():
     return float(n)
 
 def parseWord():
-
-    pass
+    word = ""
+    while hasNext() and current().isalpha():
+        word += current()
+        advance()
+    return word
 
 if __name__ == "__main__":
     while ptr != len(expression):
@@ -36,6 +39,35 @@ if __name__ == "__main__":
             stack.append(parseDigit())
         elif c.isalpha():
             word = parseWord()
+            if word == "dup":
+                top = stack.pop()
+                stack.append(top)
+                stack.append(top)
+            elif word == "swap":
+                a = stack.pop()
+                b = stack.pop()
+                stack.append(a)
+                stack.append(b)
+            elif word == "rot":
+                a = stack.pop()
+                b = stack.pop()
+                c = stack.pop()
+                stack.append(c)
+                stack.append(a)
+                stack.append(b)
+            elif word == "drop":
+                stack.pop()
+            elif word == "sum":
+                summed = 0
+                while len(stack) != 0:
+                    summed += stack.pop()
+                stack.pop(summed)
+            elif word == "avg":
+                summed = 0
+                total = len(stack)
+                while len(stack) != 0:
+                    summed += stack.pop()
+                stack.pop(summed / total)
         elif c in "+-/*":
             a = stack.pop()
             b = stack.pop()
