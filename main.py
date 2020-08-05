@@ -1,4 +1,4 @@
-expression = "15.5 1 + p"
+expression = "15.5 1.5 + 2 swap p"
 stack = []
 ptr = 0
 
@@ -68,6 +68,12 @@ if __name__ == "__main__":
                 while len(stack) != 0:
                     summed += stack.pop()
                 stack.pop(summed / total)
+            elif word == "print":
+                print(stack.pop())
+            else:
+                print("Unknown word '" + word + "'. Exiting.")
+                exit()
+            advance()
         elif c in "+-/*":
             a = stack.pop()
             b = stack.pop()
@@ -79,6 +85,5 @@ if __name__ == "__main__":
                 stack.append(a / b)            
             if c == '*':
                 stack.append(a * b)
-        elif c == 'p':
-            print(stack.pop())
         advance()
+    print(stack)
