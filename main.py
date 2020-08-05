@@ -9,31 +9,31 @@ def advance():
 def current():
     return expression[ptr]
 
-def hasNext():
-    return ptr < len(expression) - 1
+def atEnd():
+    return ptr == len(expression)
 
 def parseDigit():
     n = ""
-    while current().isdigit():
+    while not atEnd() and current().isdigit():
         n += current()
         advance()
     if current() == ".":
         n += "."
         advance() 
-        while current().isdigit():
+        while not atEnd() and current().isdigit():
             n += current()
             advance()
     return float(n)
 
 def parseWord():
     word = ""
-    while current().isalpha():
+    while not atEnd() and current().isalpha():
         word += current()
         advance()
     return word
 
 if __name__ == "__main__":
-    while ptr != len(expression):
+    while not atEnd():
         c = current()
         if c.isdigit():
             stack.append(parseDigit())
@@ -85,4 +85,3 @@ if __name__ == "__main__":
             if c == '*':
                 stack.append(a * b)
         advance()
-    print(stack)
