@@ -48,7 +48,10 @@ class Lexer:
         # Skip whitespace
         while c == ' ':
             self.current += 1
+            if self._atEnd():
+                return Token(TOKEN_END, "")
             c = self._curr()
+
         self.current += 1
 
         skipped = False
@@ -102,4 +105,4 @@ class Lexer:
         return self.source[self.current - 1]
 
     def _atEnd(self):
-        return self.current == len(self.source)
+        return self.current >= len(self.source)
