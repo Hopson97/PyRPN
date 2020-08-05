@@ -11,9 +11,7 @@ class Machine:
     def __init__(self):
         self.stack = []
         self.functions = {}
-        self.symbolTable = {}
         self.code = []
-
         self.callstack = []
 
     def _run(self, code):
@@ -36,7 +34,7 @@ class Machine:
 
     def run(self, source):
         parser = Parser()
-        parser.compile(self, source, self.code)
+        parser.compile(self.functions, source, self.code)
         self._run(self.code)
 
 '''
