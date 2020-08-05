@@ -92,9 +92,9 @@ class Machine:
             code.append(OPCODE_CALL)
             code.append(self.symbolTable[token.lexeme])
 
-        # smh direct mappings for keywords and tokens dont judge me
         elif token.type in TOKEN_TO_BUILTIN:
             code.append(TOKEN_TO_BUILTIN[token.type])
+            
         else:
             print("Unexpected token: " + token.type)
             return False
